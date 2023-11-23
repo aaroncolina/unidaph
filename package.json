@@ -36,6 +36,17 @@
     "vite": "^4.0.0"
   },
   "dependencies": {
-    "husky": "^8.0.3"
+    "husky": "^8.0.3",
+    "lint-staged": "^15.1.0"
+  },
+  "lint-staged": {
+    "*.php": [
+      "./vendor/bin/pint",
+      "prettier --write"
+    ],
+    "*.{js,jsx,ts,tsx}": [
+      "yarn lint:fix",
+      "yarn format"
+    ]
   }
 }
