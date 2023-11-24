@@ -42,8 +42,7 @@
   },
   "lint-staged": {
     "*.php": [
-      "./vendor/bin/pint",
-      "prettier --write"
+      "./vendor/bin/pint"
     ],
     "*.{js,jsx,ts,tsx}": [
       "yarn lint:fix",
