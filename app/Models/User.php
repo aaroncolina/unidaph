@@ -6,6 +6,7 @@ use App\Enums\CivilStatus;
 use App\Enums\Gender;
 use App\Enums\TagType;
 use App\Traits\BaseTrait;
+use App\Traits\HasName;
 use App\Traits\HasSettings;
 use App\Traits\HasUserFeatures;
 use Illuminate\Database\Eloquent\Collection;
@@ -17,6 +18,7 @@ class User extends Authenticatable
 {
     use BaseTrait,
         HasApiTokens,
+        HasName,
         HasSettings,
         HasUserFeatures,
         Notifiable;

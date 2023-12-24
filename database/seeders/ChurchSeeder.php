@@ -46,7 +46,22 @@ class ChurchSeeder extends Seeder
                 'name' => 'Bulacan',
                 'category' => ChurchCategory::DISTRICT,
             ], [
-                'name' => 'Visayas-Mindanao',
+                'name' => 'Mindanao',
+                'category' => ChurchCategory::DISTRICT,
+            ], [
+                'name' => 'Visayas',
+                'category' => ChurchCategory::DISTRICT,
+            ], [
+                'name' => 'Bicol',
+                'category' => ChurchCategory::DISTRICT,
+            ], [
+                'name' => 'Mindoro',
+                'category' => ChurchCategory::DISTRICT,
+            ], [
+                'name' => 'Marinduque',
+                'category' => ChurchCategory::DISTRICT,
+            ], [
+                'name' => 'Cebu',
                 'category' => ChurchCategory::DISTRICT,
             ],
         ],

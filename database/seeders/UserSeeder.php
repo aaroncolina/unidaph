@@ -14,6 +14,7 @@ class UserSeeder extends Seeder
         [
             'first_name' => 'Aaron',
             'last_name' => 'Colina',
+            'username' => 'superadmin',
             'email' => 'aaron.colina@gmail.com',
             'church' => 'Noveleta',
             'role' => RoleType::MODERATOR,
@@ -42,6 +43,7 @@ class UserSeeder extends Seeder
                 'email' => $user['email'],
                 'first_name' => $user['first_name'],
                 'last_name' => $user['last_name'],
+                'username' => $user['username'] ?? null,
                 'church_id' => $church?->id,
                 'role_id' => $role?->id,
             ]);
