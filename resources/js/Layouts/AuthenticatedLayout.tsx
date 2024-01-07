@@ -1,17 +1,23 @@
-import { useState, PropsWithChildren, ReactNode } from 'react';
+import { useState, PropsWithChildren } from 'react';
 import ApplicationLogo, { LogoOrientation } from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { Link } from '@inertiajs/react';
-import { User } from '@/types';
+import { Head, Link } from '@inertiajs/react';
+import { Member } from '@/types';
 import bgImage from '@/assets/images/registration-bg-image.png';
 
 export default function Authenticated({
   user,
-  header,
+  headerName = 'Home',
+  actions,
   children
-}: PropsWithChildren<{ user: User; header?: ReactNode }>) {
+}: PropsWithChildren<{
+  user: Member;
+  headerName?: string;
+  titleName?: string;
+  actions?: React.ReactNode;
+}>) {
   const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
   return (
@@ -21,6 +27,7 @@ export default function Authenticated({
         backgroundImage: 'url(' + bgImage + ')'
       }}
     >
+      <Head title={headerName} />
       <nav className="bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
@@ -37,6 +44,9 @@ export default function Authenticated({
               <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
                   Dashboard
+                </NavLink>
+                <NavLink href={route('members')} active={route().current('members')}>
+                  Members
                 </NavLink>
               </div>
             </div>
@@ -126,13 +136,18 @@ export default function Authenticated({
         </div>
       </nav>
 
-      {header && (
-        <header className="bg-white shadow">
-          <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
-        </header>
-      )}
+      <header className="bg-white shadow">
+        <div className="flex flex-row justify-between h-[75px] items-center max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+          <h2 className="font-semibold text-xl text-gray-800 leading-tight">{headerName}</h2>
+          <div className="flex flex-row gap-x-2">{actions}</div>
+        </div>
+      </header>
 
-      <main>{children}</main>
+      {children && (
+        <main className="max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-col gap-y-2 py-4 drop-shadow">
+          {children}
+        </main>
+      )}
     </div>
   );
 }

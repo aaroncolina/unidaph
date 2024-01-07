@@ -33,6 +33,10 @@ class HandleInertiaRequests extends Middleware
     {
         $user = $request->user();
 
+        if ($user) {
+            $user->load(['church', 'church.parentChurch']);
+        }
+
         return [
             ...parent::share($request),
             'auth' => [

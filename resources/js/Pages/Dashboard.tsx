@@ -1,18 +1,13 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import { CardLink } from '@/Components/CardLink';
 
 export default function Dashboard({ auth }: PageProps) {
   return (
-    <AuthenticatedLayout
-      user={auth.user}
-      header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
-    >
-      <Head title="Dashboard" />
+    <AuthenticatedLayout user={auth.user} headerName="Dashboard">
       <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-col gap-y-2 py-2">
         <div className="p-6 text-gray-900 bg-white rounded">You&apos;re logged in!</div>
-        <div className="overflow-hidden shadow-sm sm:rounded-lg">
+        <div className="overflow-hidden shadow-sm sm:rounded-lg p-2">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
             <CardLink href="https://laravel.com/docs">
               <div>

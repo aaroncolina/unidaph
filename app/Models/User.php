@@ -14,6 +14,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * App\Models\User
+ *
+ * @property Church $church
+ */
 class User extends Authenticatable
 {
     use BaseTrait,
@@ -52,8 +57,6 @@ class User extends Authenticatable
 
     public ?CivilStatus $civil_status;
 
-    public ?Church $church;
-
     public ?Role $role;
 
     public Collection $family;
@@ -66,7 +69,7 @@ class User extends Authenticatable
 
     public function church()
     {
-        return $this->hasOne(Church::class, 'church_id');
+        return $this->hasOne(Church::class, 'id', 'church_id');
     }
 
     public function role()

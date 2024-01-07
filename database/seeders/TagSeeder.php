@@ -49,9 +49,6 @@ class TagSeeder extends Seeder
                 'Creatives' => [
                     'Creatives',
                 ],
-                'Creatives' => [
-                    'Creatives',
-                ],
             ],
         ],
         [

@@ -5,7 +5,7 @@ namespace App\Http\Transformer;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserTransformer extends JsonResource
+class ChurchTransformer extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,11 +14,12 @@ class UserTransformer extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $data = parent::toArray($request);
-
-        return array_merge($data, [
+        return [
+            'id' => $this->id,
             'name' => $this->name,
-            'church' => new ChurchTransformer($this->whenLoaded('church')),
-        ]);
+            'category' => $this->category,
+            'description' => $this->description,
+            'parent_church' => new ChurchTransformer($this->whenLoaded('parentChurch')),
+        ];
     }
 }

@@ -2,16 +2,8 @@
 
 namespace App\Models;
 
-use App\Enums\ChurchCategory;
-
 class Church extends BaseModel
 {
-    public string $name;
-
-    public ChurchCategory $category;
-
-    public ?Church $parentChurch;
-
     protected $fillable = [
         'name',
         'category',
@@ -20,6 +12,6 @@ class Church extends BaseModel
 
     public function parentChurch()
     {
-        return $this->belongsTo(Church::class, 'parent_id');
+        return $this->hasOne(Church::class, 'id', 'parent_id');
     }
 }

@@ -26,6 +26,34 @@ class UserSeeder extends Seeder
             'church' => 'Noveleta',
             'role' => RoleType::MODERATOR,
         ],
+        [
+            'first_name' => 'Aleksandra',
+            'last_name' => 'Padua',
+            'email' => 'aleksandrapadua@gmail.com',
+            'church' => 'Noveleta',
+            'role' => RoleType::MODERATOR,
+        ],
+        [
+            'first_name' => 'Arthur',
+            'last_name' => 'Paredes',
+            'email' => 'arthurparedes@gmail.com',
+            'church' => 'Noveleta',
+            'role' => RoleType::MODERATOR,
+        ],
+        [
+            'first_name' => 'Ayi',
+            'last_name' => 'Hernandez',
+            'email' => 'ayihernandez@gmail.com',
+            'church' => 'Noveleta',
+            'role' => RoleType::MODERATOR,
+        ],
+        [
+            'first_name' => 'Richard',
+            'last_name' => 'Buenaventura',
+            'email' => 'richardbuenaventura@gmail.com',
+            'church' => 'Noveleta',
+            'role' => RoleType::MODERATOR,
+        ],
     ];
 
     /**
