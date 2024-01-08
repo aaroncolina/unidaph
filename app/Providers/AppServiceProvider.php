@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Http\Middleware\TrimStrings;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;
 
@@ -21,5 +23,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         JsonResource::withoutWrapping();
+
+        TrimStrings::skipWhen(function (Request $request) {
+            return $request->is('members');
+        });
     }
 }

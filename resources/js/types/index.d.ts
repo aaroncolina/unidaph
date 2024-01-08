@@ -1,3 +1,5 @@
+export type Primitive = string | number;
+
 export interface Member {
   id: number;
   name: string;

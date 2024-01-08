@@ -17,7 +17,6 @@ class UserController extends Controller
 
     public function index(UserListRequest $request): Response
     {
-
         return Inertia::render('User/List', [
             'members' => UserTransformer::collection(
                 $this->userRepository->getUsers($request->all())
