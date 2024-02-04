@@ -17,10 +17,9 @@ return new class extends Migration
             $table->increments('id');
             $table->uuid('uuid')->unique();
             $table->uuid('user_id')->unique();
-            $table->date('acceptance_date')->nullable()->default(null);
-            $table->date('baptismal_date')->nullable()->default(null);
+            $table->date('date_of_conversion')->nullable()->default(null);
+            $table->date('date_of_baptism')->nullable()->default(null);
             $table->string('baptismal_location')->nullable()->default(null);
-            $table->string('description')->nullable()->default(null);
             $table->softDeletes();
             $table->timestamps();
         });

@@ -3,6 +3,7 @@ import { PageProps } from '@/types';
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import githubLogo from '@/assets/images/github/github-mark.png';
 import bgImage from '@/assets/images/registration-bg-image.png';
+import { GetRoutes } from '@/const';
 
 export default function Welcome({
   auth
@@ -22,7 +23,7 @@ export default function Welcome({
             <div className="flex flex-row gap-x-4 justify-center">
               {auth.user ? (
                 <Link
-                  href={route('dashboard')}
+                  href={route(GetRoutes.Dashboard)}
                   className="text-2xl font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
                 >
                   You have returned, {auth.user?.name}

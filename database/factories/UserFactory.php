@@ -27,7 +27,7 @@ class UserFactory extends Factory
             'gender' => fake()->randomElement(array_column(Gender::cases(), 'value')),
             'civil_status' => fake()->randomElement(array_column(CivilStatus::cases(), 'value')),
             'date_of_birth' => fake()->date(),
-            'birth_address' => fake()->address(),
+            'address' => fake()->address(),
             'remember_token' => Str::random(10),
         ];
     }

@@ -1,3 +1,19 @@
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { Primitive } from '.';
+
+export interface KeyValue {
+  key: Primitive;
+  value: Primitive;
+}
+export interface LabelValue {
+  label: Primitive;
+  value: Primitive;
+}
+export interface GroupedLabelValue {
+  label: Primitive;
+  options: LabelValue[];
+}
+
 export interface Pagination<T> {
   data: T[];
   links: {
@@ -22,4 +38,10 @@ export interface PaginationItemLink {
   url?: string;
   label?: string;
   active?: boolean;
+}
+
+export interface NavItem {
+  name: string;
+  route: string;
+  icon: IconDefinition;
 }

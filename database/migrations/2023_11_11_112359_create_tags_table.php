@@ -18,7 +18,7 @@ return new class extends Migration
             $table->uuid('uuid')->unique();
             $table->string('type');
             $table->string('value');
-            $table->string('category');
+            $table->string('category')->nullable()->default(null);
             $table->string('description')->nullable()->default(null);
             $table->softDeletes();
             $table->timestamps();

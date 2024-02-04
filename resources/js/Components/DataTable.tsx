@@ -16,6 +16,7 @@ export interface DataTableProps<T> {
   pagination: Pagination<T>;
   columns: DataTableColumn<T>[];
   actions?: DataTableColumnActions<T>[];
+  onRowClick?: (value: T) => void;
   partialLoadKeys: string[];
 }
 
@@ -23,6 +24,7 @@ export default function DataTable<T>({
   pagination,
   columns,
   actions = [],
+  onRowClick,
   partialLoadKeys
 }: DataTableProps<T>) {
   return (
@@ -49,10 +51,10 @@ export default function DataTable<T>({
             return (
               <tr
                 key={index}
-                className={cx([
-                  'bg-white border-b dark:bg-gray-800 dark:border-gray-700',
-                  'hover:bg-gray-50 dark:hover:bg-gray-600'
-                ])}
+                className={cx(['bg-white border-b hover:bg-gray-50'], {
+                  'cursor-pointer': onRowClick
+                })}
+                onClick={() => onRowClick?.(item)}
               >
                 {columns.map((columnItem, index) => {
                   return (

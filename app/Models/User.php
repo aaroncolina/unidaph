@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Enums\CivilStatus;
-use App\Enums\Gender;
 use App\Enums\TagType;
 use App\Traits\BaseTrait;
 use App\Traits\HasName;
@@ -38,7 +36,7 @@ class User extends Authenticatable
         'gender',
         'civil_status',
         'date_of_birth',
-        'birth_address',
+        'address',
         'date_of_death',
     ];
 
@@ -52,12 +50,6 @@ class User extends Authenticatable
     ];
 
     protected $primaryKey = 'uuid';
-
-    public ?Gender $gender;
-
-    public ?CivilStatus $civil_status;
-
-    public ?Role $role;
 
     public Collection $family;
 
@@ -111,6 +103,8 @@ class User extends Authenticatable
             'user_tags',
             'user_id',
             'tag_id',
+            null,
+            'id'
         )->withPivot([
             'type',
         ])->using(
@@ -133,6 +127,15 @@ class User extends Authenticatable
             'type',
             '=',
             TagType::CHURCH_POSITION->value
+        );
+    }
+
+    public function occupations()
+    {
+        return $this->tags()->wherePivot(
+            'type',
+            '=',
+            TagType::OCCUPATION->value
         );
     }
 

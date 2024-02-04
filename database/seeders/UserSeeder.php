@@ -67,7 +67,7 @@ class UserSeeder extends Seeder
             $church = Church::where('name', $user['church'])->first();
             $role = Role::where('name', $user['role']->value)->first();
 
-            User::factory()->create([
+            User::factory(1)->create([
                 'email' => $user['email'],
                 'first_name' => $user['first_name'],
                 'last_name' => $user['last_name'],
@@ -76,5 +76,10 @@ class UserSeeder extends Seeder
                 'role_id' => $role?->id,
             ]);
         }
+
+        User::factory(15000)->create([
+            'church_id' => 'Noveleta',
+            'role_id' => RoleType::MODERATOR,
+        ]);
     }
 }

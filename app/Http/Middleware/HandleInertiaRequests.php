@@ -2,13 +2,24 @@
 
 namespace App\Http\Middleware;
 
+use App\Enums\ChurchCategory;
+use App\Http\Transformer\ChurchTransformer;
+use App\Http\Transformer\TagTransformer;
 use App\Http\Transformer\UserTransformer;
+use App\Repositories\ChurchRepository;
+use App\Repositories\TagRepository;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
 
 class HandleInertiaRequests extends Middleware
 {
+    public function __construct(
+        private TagRepository $tagRepository,
+        private ChurchRepository $churchRepository,
+    ) {
+    }
+
     /**
      * The root template that is loaded on the first page visit.
      *
@@ -46,6 +57,10 @@ class HandleInertiaRequests extends Middleware
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],
+            'occupations' => TagTransformer::collection($this->tagRepository->getOccupations()),
+            'church_positions' => TagTransformer::collection($this->tagRepository->getChurchPositions()),
+            'church_ministries' => TagTransformer::collection($this->tagRepository->getChurchMinistries()),
+            'local_church' => ChurchTransformer::collection($this->churchRepository->getChurchByCategory(ChurchCategory::LOCAL)),
         ];
     }
 }

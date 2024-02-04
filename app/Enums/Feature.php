@@ -2,8 +2,12 @@
 
 namespace App\Enums;
 
+use App\Enums\Trait\EnumToArray;
+
 enum Feature: string
 {
+    use EnumToArray;
+
     case ACCESS = 'access';
     case EDIT_OWN_PROFILE = 'edit_own_profile';
 

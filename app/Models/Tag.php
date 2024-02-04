@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Enums\TagType;
-
 class Tag extends BaseModel
 {
     protected $fillable = [
@@ -12,6 +10,4 @@ class Tag extends BaseModel
         'category',
         'description',
     ];
-
-    public TagType $type;
 }

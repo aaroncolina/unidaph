@@ -29,11 +29,41 @@ Route::get('/', function () {
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+    ->name('dashboard.index');
 
-Route::get('/members', [UserController::class, 'index'])
-    ->middleware(['auth', 'verified'])
-    ->name('members');
+// publish
+Route::group(
+    [
+        'prefix' => 'members',
+        'as' => 'members.',
+        'middleware' => ['auth', 'verified'],
+    ],
+    function () {
+        Route::get('', [UserController::class, 'index'])->name(
+            'index'
+        );
+
+        Route::get('{user:id}/view', [UserController::class, 'show'])->name(
+            'show'
+        );
+
+        Route::get('/create', [UserController::class, 'create'])->name(
+            'create'
+        );
+
+        Route::post('/create', [UserController::class, 'store'])->name(
+            'store'
+        );
+
+        Route::get('{user:id}/edit', [UserController::class, 'edit'])->name(
+            'edit'
+        );
+
+        Route::put('{user:id}/edit', [UserController::class, 'update'])->name(
+            'update'
+        );
+    }
+);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

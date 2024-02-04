@@ -36,12 +36,18 @@
     "vite": "^4.0.0"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.5.1",
+    "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@types/lodash": "^4.14.202",
+    "@types/react-datepicker": "^4.19.5",
     "classnames": "^2.3.2",
     "husky": "^8.0.3",
     "lint-staged": "^15.1.0",
     "lodash": "^4.17.21",
-    "react-data-table-component": "^7.5.4"
+    "react-data-table-component": "^7.5.4",
+    "react-datepicker": "^4.25.0",
+    "react-select": "^5.8.0"
   },
   "lint-staged": {
     "*.php": [

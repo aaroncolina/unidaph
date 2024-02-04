@@ -6,17 +6,26 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Head, Link } from '@inertiajs/react';
 import { Member } from '@/types';
 import bgImage from '@/assets/images/registration-bg-image.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignOut } from '@fortawesome/free-solid-svg-icons/faSignOut';
+import { faUser } from '@fortawesome/free-solid-svg-icons/faUser';
+import { faChevronLeft, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { navItems } from '@/const';
 
 export default function Authenticated({
   user,
   headerName = 'Home',
-  actions,
+  leftActions,
+  rightActions,
+  showBackLink = false,
   children
 }: PropsWithChildren<{
   user: Member;
   headerName?: string;
   titleName?: string;
-  actions?: React.ReactNode;
+  showBackLink?: boolean;
+  leftActions?: React.ReactNode;
+  rightActions?: React.ReactNode;
 }>) {
   const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
@@ -42,12 +51,19 @@ export default function Authenticated({
               </div>
 
               <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                  Dashboard
-                </NavLink>
-                <NavLink href={route('members')} active={route().current('members')}>
-                  Members
-                </NavLink>
+                {navItems?.map((link, index) => {
+                  return (
+                    <NavLink
+                      key={index}
+                      href={route(link.route)}
+                      active={route().current(link.route)}
+                      className="flex flex-row gap-x-2"
+                    >
+                      <FontAwesomeIcon icon={link.icon} />
+                      {link.name}
+                    </NavLink>
+                  );
+                })}
               </div>
             </div>
 
@@ -58,8 +74,9 @@ export default function Authenticated({
                     <span className="inline-flex rounded-md">
                       <button
                         type="button"
-                        className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                        className="inline-flex gap-x-2.5 items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
                       >
+                        <FontAwesomeIcon icon={faUser} />
                         {user.first_name} {user.last_name}
                         <svg
                           className="ms-2 -me-0.5 h-4 w-4"
@@ -78,9 +95,11 @@ export default function Authenticated({
                   </Dropdown.Trigger>
 
                   <Dropdown.Content>
-                    <Dropdown.Link href={route('profile.edit')}>Profile</Dropdown.Link>
+                    <Dropdown.Link href={route('profile.edit')}>
+                      <FontAwesomeIcon icon={faUserCircle} /> &nbsp; Profile
+                    </Dropdown.Link>
                     <Dropdown.Link href={route('logout')} method="post" as="button">
-                      Log Out
+                      <FontAwesomeIcon icon={faSignOut} /> &nbsp; Log Out
                     </Dropdown.Link>
                   </Dropdown.Content>
                 </Dropdown>
@@ -115,9 +134,19 @@ export default function Authenticated({
 
         <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
           <div className="pt-2 pb-3 space-y-1">
-            <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
-              Dashboard
-            </ResponsiveNavLink>
+            {navItems?.map((link, index) => {
+              return (
+                <ResponsiveNavLink
+                  key={index}
+                  href={route(link.route)}
+                  active={route().current(link.route)}
+                  className="flex flex-row gap-x-2"
+                >
+                  <FontAwesomeIcon icon={link.icon} />
+                  {link.name}
+                </ResponsiveNavLink>
+              );
+            })}
           </div>
 
           <div className="pt-4 pb-1 border-t border-gray-200">
@@ -137,9 +166,19 @@ export default function Authenticated({
       </nav>
 
       <header className="bg-white shadow">
-        <div className="flex flex-row justify-between h-[75px] items-center max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
-          <h2 className="font-semibold text-xl text-gray-800 leading-tight">{headerName}</h2>
-          <div className="flex flex-row gap-x-2">{actions}</div>
+        <div className="flex flex-row gap-x-4 justify-between h-[75px] items-center max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-row gap-x-4 items-center">
+            {showBackLink && (
+              <FontAwesomeIcon
+                className="cursor-pointer"
+                icon={faChevronLeft}
+                onClick={() => window.history.back()}
+              />
+            )}
+            <h2 className="font-semibold text-xl text-gray-800 leading-tight">{headerName}</h2>
+            {leftActions}
+          </div>
+          <div className="flex flex-row justify-between gap-x-4">{rightActions}</div>
         </div>
       </header>
 

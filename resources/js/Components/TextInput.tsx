@@ -1,11 +1,13 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, InputHTMLAttributes } from 'react';
+import cx from 'classnames';
 
 export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   isFocused?: boolean;
+  viewMode?: boolean;
 }
 
 export default forwardRef(function TextInput(
-  { type = 'text', className = '', isFocused = false, ...props }: TextInputProps,
+  { type = 'text', className = '', isFocused = false, viewMode = false, ...props }: TextInputProps,
   ref
 ) {
   const localRef = useRef<HTMLInputElement>(null);
@@ -24,10 +26,12 @@ export default forwardRef(function TextInput(
     <input
       {...props}
       type={type}
-      className={
-        className +
-        'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm '
-      }
+      disabled={viewMode || props.disabled}
+      className={cx(className, 'h-[40px] text-gray-900 w-full rounded-lg ', {
+        'border-0 bg-transparent px-0': viewMode,
+        'border border-gray-300 bg-gray-50 focus:ring-primary-500 focus:border-primary-500  disabled:bg-gray-100':
+          !viewMode
+      })}
       ref={localRef}
     />
   );
