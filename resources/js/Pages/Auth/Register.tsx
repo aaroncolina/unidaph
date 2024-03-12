@@ -1,9 +1,9 @@
 import { useEffect, FormEventHandler } from 'react';
 import GuestLayout from '@/Layouts/GuestLayout';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
+import InputError from '@/Components/Input/InputError';
+import InputLabel from '@/Components/Input/InputLabel';
+import PrimaryButton from '@/Components/Button/PrimaryButton';
+import TextInput from '@/Components/Input/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
 
 export default function Register() {
@@ -107,7 +107,7 @@ export default function Register() {
             Already registered?
           </Link>
 
-          <PrimaryButton className="ms-4" disabled={processing}>
+          <PrimaryButton type="submit" className="ms-4" disabled={processing}>
             Register
           </PrimaryButton>
         </div>

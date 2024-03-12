@@ -66,7 +66,7 @@ class User extends Authenticatable
 
     public function role()
     {
-        return $this->hasOne(Role::class, 'role_id');
+        return $this->hasOne(Role::class, 'id', 'role_id');
     }
 
     public function family()
@@ -144,7 +144,7 @@ class User extends Authenticatable
         return $this->tags()->wherePivot(
             'type',
             '=',
-            TagType::CHURCH_POSITION->value
+            TagType::TALENT->value
         );
     }
 }

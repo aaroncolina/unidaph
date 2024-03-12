@@ -1,7 +1,7 @@
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
+import InputError from '@/Components/Input/InputError';
+import InputLabel from '@/Components/Input/InputLabel';
+import PrimaryButton from '@/Components/Button/PrimaryButton';
+import TextInput from '@/Components/Input/TextInput';
 import { Link, useForm, usePage } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
 import { FormEventHandler } from 'react';
@@ -115,7 +115,9 @@ export default function UpdateProfileInformation({
         )}
 
         <div className="flex items-center gap-4">
-          <PrimaryButton disabled={processing}>Save</PrimaryButton>
+          <PrimaryButton type="submit" disabled={processing}>
+            Save
+          </PrimaryButton>
 
           <Transition
             show={recentlySuccessful}

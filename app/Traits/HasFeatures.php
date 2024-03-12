@@ -45,7 +45,9 @@ trait HasFeatures
     {
         $features = $this->features();
         foreach ($data as $details) {
-            $features[$details['key']->value] = $details['value'];
+            if (isset($details['key']) && $details['key']->value != '') {
+                $features[$details['key']->value] = $details['value'];
+            }
         }
 
         $this->setSetting(

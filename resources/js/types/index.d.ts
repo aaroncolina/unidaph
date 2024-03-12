@@ -1,4 +1,5 @@
-import { GenderType, TagType } from './enums';
+import { GenderType, ImportMemberKeys, MaritalStatusType, TagType } from './enums';
+import { ToastDetail } from './generic';
 
 export type Primitive = string | number;
 
@@ -12,13 +13,14 @@ export interface Member {
   email: string;
   username?: string;
   email_verified_at?: string;
-  civil_status?: string;
+  civil_status?: MaritalStatusType;
   date_of_birth?: string;
   date_of_death?: string;
   address?: string;
   contact_number?: string;
   gender: GenderType;
   church?: Church;
+  church_managed?: Church[];
   church_ministries?: Tag<TagType.ChurchMinistry>[];
   church_positions?: Tag<TagType.ChurchPosition>[];
   occupations?: Tag<TagType.Occupation>[];
@@ -56,4 +58,9 @@ export type PageProps<T extends Record<string, unknown> = Record<string, unknown
   church_positions: Tag<TagType.ChurchPosition>[];
   church_ministries: Tag<TagType.ChurchMinistry>[];
   local_church: Church[];
+  flash?: {
+    toast: ToastDetail;
+  };
 };
+
+export type ImportMember = Record<ImportMemberKeys, string>;

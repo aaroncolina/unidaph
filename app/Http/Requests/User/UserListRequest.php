@@ -18,6 +18,7 @@ class UserListRequest extends FormRequest
             'sort_by' => ['string', 'max:255'],
             'sort_order' => ['in:asc,desc', 'string'],
             'per_page' => ['integer'],
+            'church' => ['exists:churches,id'],
         ];
     }
 }

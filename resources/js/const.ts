@@ -8,12 +8,18 @@ export enum GetRoutes {
   Members = 'members.index',
   ViewMember = 'members.show',
   CreateMember = 'members.create',
-  EditMember = 'members.edit'
+  EditMember = 'members.edit',
+  ImportMember = 'members.import'
 }
 
 export enum PostRoutes {
   StoreMember = 'members.store',
-  UpdateMember = 'members.update'
+  UpdateMember = 'members.update',
+  UploadImportMembers = 'members.import.upload'
+}
+
+export enum DeleteRoutes {
+  DeleteMember = 'members.destroy'
 }
 
 export const navItems: NavItem[] = [

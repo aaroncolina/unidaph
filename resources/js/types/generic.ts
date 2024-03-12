@@ -1,5 +1,6 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { Primitive } from '.';
+import { ImportMemberKeys } from './enums';
 
 export interface KeyValue {
   key: Primitive;
@@ -16,13 +17,13 @@ export interface GroupedLabelValue {
 
 export interface Pagination<T> {
   data: T[];
-  links: {
+  links?: {
     first?: string;
     last?: string;
     next?: string;
     prev?: string;
   };
-  meta: {
+  meta?: {
     current_page?: number;
     from?: number;
     last_page?: number;
@@ -45,3 +46,24 @@ export interface NavItem {
   route: string;
   icon: IconDefinition;
 }
+
+export interface ToastDetail {
+  message: string;
+  type: 'default' | 'success' | 'error' | 'warning' | 'info';
+}
+
+export const ImportMemberMappedKeys: Record<ImportMemberKeys, string> = {
+  [ImportMemberKeys.FirstName]: 'first_name',
+  [ImportMemberKeys.MiddleName]: 'middle_name',
+  [ImportMemberKeys.LastName]: 'last_name',
+  [ImportMemberKeys.Email]: 'email',
+  [ImportMemberKeys.ContactNumber]: 'contact_number',
+  [ImportMemberKeys.Birthdate]: 'date_of_birth',
+  [ImportMemberKeys.Address]: 'address',
+  [ImportMemberKeys.Gender]: 'gender',
+  [ImportMemberKeys.CivilStatus]: 'civil_status',
+  [ImportMemberKeys.DateOfConversion]: 'date_of_conversion',
+  [ImportMemberKeys.DateOfBaptismal]: 'date_of_baptismal',
+  [ImportMemberKeys.ChurchPosition]: 'church_position',
+  [ImportMemberKeys.Ministries]: 'ministries'
+};

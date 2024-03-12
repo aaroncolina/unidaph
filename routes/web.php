@@ -62,6 +62,18 @@ Route::group(
         Route::put('{user:id}/edit', [UserController::class, 'update'])->name(
             'update'
         );
+
+        Route::delete('{user:id}/delete', [UserController::class, 'destroy'])->name(
+            'destroy'
+        );
+
+        Route::get('import', [UserController::class, 'import'])->name(
+            'import'
+        );
+
+        Route::post('upload', [UserController::class, 'upload'])->name(
+            'import.upload'
+        );
     }
 );
 

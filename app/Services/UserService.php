@@ -4,11 +4,18 @@ namespace App\Services;
 
 use App\Enums\TagType;
 use App\Models\User;
+use App\Repositories\UserRepository;
 
 class UserService
 {
+    public function __construct(
+        private UserRepository $userRepository
+    ) {
+
+    }
+
     /**
-     * @return User
+     * @return User | null
      */
     public function createUser(array $attributes)
     {

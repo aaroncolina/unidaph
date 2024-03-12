@@ -1,6 +1,6 @@
 import { Link, Head } from '@inertiajs/react';
 import { PageProps } from '@/types';
-import ApplicationLogo from '@/Components/ApplicationLogo';
+import ApplicationLogo from '@/Components/Logo/ApplicationLogo';
 import githubLogo from '@/assets/images/github/github-mark.png';
 import bgImage from '@/assets/images/registration-bg-image.png';
 import { GetRoutes } from '@/const';

@@ -33,3 +33,19 @@ export enum OrganizationType {
   Kababaihan = 'kababaihan',
   Kalalakihan = 'kalalakihan'
 }
+
+export enum ImportMemberKeys {
+  FirstName = 'First name',
+  MiddleName = 'Middle name',
+  LastName = 'Last name',
+  Email = 'Email',
+  ContactNumber = 'Contact #',
+  Birthdate = 'Birthdate',
+  Address = 'Address',
+  Gender = 'Gender',
+  CivilStatus = 'Civil Status',
+  DateOfConversion = 'Date of conversion',
+  DateOfBaptismal = 'Date of baptismal',
+  ChurchPosition = 'Church position',
+  Ministries = 'Ministries'
+}

@@ -47,6 +47,7 @@ export default function GenericSelect({
         'bg-transparent': viewMode,
         'bg-gray-50': !viewMode
       })}
+      isClearable={false}
       styles={{
         control: (baseStyles) => ({
           ...baseStyles,

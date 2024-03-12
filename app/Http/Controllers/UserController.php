@@ -20,16 +20,22 @@ class UserController extends Controller
 {
     public function __construct(
         private UserRepository $userRepository,
-        private TagRepository $tagRepository,
+        private TagRepository $tagRepogsitory,
         private UserService $userService,
     ) {
     }
 
     public function index(UserListRequest $request): Response
     {
+        $church_managed = $request->user()->churchManaged;
+
         return Inertia::render('Member/List', [
             'members' => UserTransformer::collection(
-                $this->userRepository->getUsers($request->all())
+                $this->userRepository->getUsers(
+                    array_merge($request->all(), [
+                        'church_managed' => $church_managed->pluck('id')->toArray(),
+                    ])
+                )
             ),
             'request' => $request->all(),
         ]);
@@ -44,21 +50,37 @@ class UserController extends Controller
 
     public function store(AddUserRequest $request): RedirectResponse
     {
-        $user = $this->userService->createUser($request->all());
+        $attributes = $request->all();
+        $existingUser = $this->userRepository->getUserViaName($attributes);
 
-        return Redirect::route('members.show', [
-            'user' => $user->id,
-        ]);
+        if (! $existingUser) {
+            $user = $this->userService->createUser($attributes);
+
+            $request->session()->flash('toast', [
+                'message' => 'Successfully added a user!',
+                'type' => 'success',
+            ]);
+
+            return Redirect::route('members.show', ['user' => $user->id]);
+        } else {
+
+            $request->session()->flash('toast', [
+                'message' => 'This user is already existing',
+                'type' => 'error',
+            ]);
+
+            return Redirect::route('members.create');
+        }
     }
 
     public function show(Request $request, User $user): Response
     {
         $this->loadUserRelations($user);
 
-        return Inertia::render('Member/AddEdit', [
+        return Inertia::render('Member/AddEdit', array_merge([
             'member' => new UserTransformer($user),
             'viewOnly' => true,
-        ]);
+        ], $request->all()));
     }
 
     public function edit(Request $request, User $user): Response
@@ -78,6 +100,32 @@ class UserController extends Controller
         return Redirect::route('members.show', [
             'user' => $user->id,
         ]);
+    }
+
+    public function destroy(Request $request, User $user): RedirectResponse
+    {
+        if ($user->id === $request->user()->id) {
+            $request->session()->flash('toast', [
+                'message' => 'You cannot delete your own account.',
+                'type' => 'error',
+            ]);
+
+            return Redirect::route('members.index');
+        }
+
+        $user->delete();
+
+        $request->session()->flash('toast', [
+            'message' => 'Member deleted!',
+            'type' => 'success',
+        ]);
+
+        return Redirect::route('members.index');
+    }
+
+    public function import(): Response
+    {
+        return Inertia::render('Member/Import');
     }
 
     protected function loadUserRelations(User $user)

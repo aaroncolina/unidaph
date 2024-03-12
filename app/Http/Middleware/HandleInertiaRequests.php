@@ -50,6 +50,9 @@ class HandleInertiaRequests extends Middleware
 
         return [
             ...parent::share($request),
+            'flash' => [
+                'toast' => fn () => $request->session()->get('toast'),
+            ],
             'auth' => [
                 'user' => $user != null ? new UserTransformer($request->user()) : null,
             ],

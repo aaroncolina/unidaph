@@ -47,7 +47,7 @@ trait HasSettings
     private function storeSetting(string $key, $value)
     {
         $record = Settings::where([
-            'morphable_id' => $this->id,
+            'morphable_id' => $this->uuid,
             'morphable_type' => $this->getMorphableKey(),
             'key' => $key,
         ])->first();

@@ -1,16 +1,17 @@
-import { useState, PropsWithChildren } from 'react';
-import ApplicationLogo, { LogoOrientation } from '@/Components/ApplicationLogo';
-import Dropdown from '@/Components/Dropdown';
-import NavLink from '@/Components/NavLink';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { Head, Link } from '@inertiajs/react';
-import { Member } from '@/types';
+import { useState, PropsWithChildren, useEffect } from 'react';
+import ApplicationLogo, { LogoOrientation } from '@/Components/Logo/ApplicationLogo';
+import Dropdown from '@/Components/Dropdown/Dropdown';
+import NavLink from '@/Components/Link/NavLink';
+import ResponsiveNavLink from '@/Components/Link/ResponsiveNavLink';
+import { Head, Link, usePage } from '@inertiajs/react';
+import { Member, PageProps } from '@/types';
 import bgImage from '@/assets/images/registration-bg-image.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOut } from '@fortawesome/free-solid-svg-icons/faSignOut';
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser';
 import { faChevronLeft, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { navItems } from '@/const';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function Authenticated({
   user,
@@ -29,6 +30,30 @@ export default function Authenticated({
 }>) {
   const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
+  const messageToast = usePage<PageProps>().props.flash?.toast;
+
+  useEffect(() => {
+    if (toast) {
+      switch (messageToast?.type) {
+        case 'warning':
+          toast.warning(messageToast?.message);
+          break;
+        case 'success':
+          toast.success(messageToast?.message);
+          break;
+        case 'error':
+          toast.error(messageToast?.message);
+          break;
+        case 'info':
+          toast.info(messageToast?.message);
+          break;
+        default:
+          toast.success(messageToast?.message);
+          break;
+      }
+    }
+  }, [messageToast]);
+
   return (
     <div
       className="min-h-screen bg-gray-100"
@@ -36,6 +61,19 @@ export default function Authenticated({
         backgroundImage: 'url(' + bgImage + ')'
       }}
     >
+      <ToastContainer
+        toastClassName="!font-circular"
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <Head title={headerName} />
       <nav className="bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

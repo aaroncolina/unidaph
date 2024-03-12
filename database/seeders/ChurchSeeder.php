@@ -75,6 +75,10 @@ class ChurchSeeder extends Seeder
                 'name' => 'Anabu',
                 'category' => ChurchCategory::LOCAL,
                 'parent' => 'Cavite 2',
+            ],  [
+                'name' => 'Santa Rosa',
+                'category' => ChurchCategory::LOCAL,
+                'parent' => 'Laguna',
             ], [
                 'name' => 'Salawag',
                 'category' => ChurchCategory::LOCAL,

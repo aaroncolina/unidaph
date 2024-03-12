@@ -1,9 +1,9 @@
 import { useEffect, FormEventHandler } from 'react';
 import GuestLayout from '@/Layouts/GuestLayout';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
+import InputError from '@/Components/Input/InputError';
+import InputLabel from '@/Components/Input/InputLabel';
+import PrimaryButton from '@/Components/Button/PrimaryButton';
+import TextInput from '@/Components/Input/TextInput';
 import { Head, useForm } from '@inertiajs/react';
 
 export default function ResetPassword({ token, email }: { token: string; email: string }) {
@@ -80,7 +80,7 @@ export default function ResetPassword({ token, email }: { token: string; email: 
         </div>
 
         <div className="flex items-center justify-end mt-4">
-          <PrimaryButton className="ms-4" disabled={processing}>
+          <PrimaryButton type="submit" className="ms-4" disabled={processing}>
             Reset Password
           </PrimaryButton>
         </div>

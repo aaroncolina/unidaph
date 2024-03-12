@@ -19,7 +19,8 @@ const DEFAULT_PER_PAGE_OPTIONS = [
   }
 ];
 
-export interface PerPageSelectProps extends Pick<GenericSelectProps, 'selected' | 'onChange'> {}
+export interface PerPageSelectProps
+  extends Pick<GenericSelectProps, 'selected' | 'onChange' | 'containerClassName'> {}
 
 export default function PerPageSelect({ ...props }: PerPageSelectProps) {
   return (

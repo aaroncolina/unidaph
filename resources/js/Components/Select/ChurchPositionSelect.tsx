@@ -6,7 +6,7 @@ import { ChurchCategory } from '@/types/enums';
 export interface ChurchPositionSelectProps
   extends Pick<
     GenericSelectProps,
-    'selected' | 'onChange' | 'isSearchable' | 'label' | 'className' | 'viewMode'
+    'selected' | 'onChange' | 'isSearchable' | 'label' | 'className' | 'viewMode' | 'isMulti'
   > {}
 
 export default function ChurchPositionSelect({ ...props }: ChurchPositionSelectProps) {
@@ -43,7 +43,6 @@ export default function ChurchPositionSelect({ ...props }: ChurchPositionSelectP
         }
       ]}
       isGrouped
-      isMulti
       placeholder="Select a church position if applicable"
     />
   );

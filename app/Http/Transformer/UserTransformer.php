@@ -33,6 +33,7 @@ class UserTransformer extends JsonResource
             'date_of_death' => $this->date_of_death,
             'update_at' => $this->update_at,
             'church' => new ChurchTransformer($this->whenLoaded('church')),
+            'church_managed' => ChurchTransformer::collection($this->churchManaged),
             'church_positions' => TagTransformer::collection($this->whenLoaded('positions')),
             'church_ministries' => TagTransformer::collection($this->whenLoaded('ministries')),
             'occupations' => TagTransformer::collection($this->whenLoaded('occupations')),

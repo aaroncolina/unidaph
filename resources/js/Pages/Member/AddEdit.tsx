@@ -1,11 +1,11 @@
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
+import PrimaryButton from '@/Components/Button/PrimaryButton';
+import TextInput from '@/Components/Input/TextInput';
 import { Link, useForm } from '@inertiajs/react';
 import { RequestPayload } from '@inertiajs/core';
 import { useCallback, useMemo } from 'react';
 import { Member, PageProps } from '@/types';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import SecondaryButton from '@/Components/SecondaryButton';
+import SecondaryButton from '@/Components/Button/SecondaryButton';
 import { GetRoutes, PostRoutes } from '@/const';
 import { OnChangeValue } from 'react-select';
 import { FormInputGroup } from '@/Components/Form/FormInputGroup';
@@ -13,17 +13,17 @@ import { FormGroup } from '@/Components/Form/FormGroup';
 import { FormRow } from '@/Components/Form/FormRow';
 import person from '@/assets/images/user/person.png';
 
-import { DatePicker } from '@/Components/DatePicker';
+import { DatePicker } from '@/Components/Input/DatePicker';
 import GenderSelect from '@/Components/Select/GenderSelect';
 import MaritalStatusSelect from '@/Components/Select/MaritalStatusSelect';
 import OccupationSelect from '@/Components/Select/OccupationSelect';
 import ChurchPositionSelect from '@/Components/Select/ChurchPositionSelect';
 import ChurchMinistrySelect from '@/Components/Select/ChurchMinistrySelect';
-import LocalChurchSelect from '@/Components/Select/LocalChurchSelectProps';
+import ChurchSelect from '@/Components/Select/ChurchSelect';
 import { LabelValue } from '@/types/generic';
 import { computeDateOfBirth, dateToDateString } from '@/helper/date';
 import { getOrganizationType } from '@/helper/organization';
-import { GenderType, MaritalStatusType } from '@/types/enums';
+import { ChurchCategory, GenderType, MaritalStatusType } from '@/types/enums';
 import { humanize } from '@/helper/word';
 import { extractTagIds } from '@/helper/tag';
 import { upperFirst } from 'lodash';
@@ -90,7 +90,12 @@ export default function AddEdit({ auth, request, member, viewOnly = false }: Add
     if (data.id) {
       put(route(PostRoutes.UpdateMember, { id: data.id }), payload);
     } else {
-      post(route(PostRoutes.StoreMember), payload);
+      post(route(PostRoutes.StoreMember), {
+        ...payload,
+        onSuccess: (test) => {
+          console.log('test', test);
+        }
+      });
     }
   }, [data, member]);
 
@@ -106,14 +111,14 @@ export default function AddEdit({ auth, request, member, viewOnly = false }: Add
   const age = dateOfBirth ? computeDateOfBirth(dateOfBirth) : 0;
 
   const mode = useMemo(() => {
-    if (data.id) {
+    if (member?.id) {
       if (viewOnly) return Mode.View;
 
       return Mode.Edit;
     }
 
     return Mode.Add;
-  }, [data, viewOnly]);
+  }, [member, viewOnly]);
 
   return (
     <AuthenticatedLayout
@@ -127,7 +132,7 @@ export default function AddEdit({ auth, request, member, viewOnly = false }: Add
             </PrimaryButton>
           )}
           {mode === Mode.View && (
-            <Link href={route(GetRoutes.EditMember, { id: data.id })}>
+            <Link href={route(GetRoutes.EditMember, { id: member?.id })}>
               <PrimaryButton>Edit</PrimaryButton>
             </Link>
           )}
@@ -196,6 +201,7 @@ export default function AddEdit({ auth, request, member, viewOnly = false }: Add
                     label="Birth date"
                     className="w-2/3"
                     error={errors?.date_of_birth}
+                    required
                   >
                     <DatePicker
                       viewMode={viewOnly}
@@ -283,6 +289,7 @@ export default function AddEdit({ auth, request, member, viewOnly = false }: Add
                   <ChurchPositionSelect
                     viewMode={viewOnly}
                     selected={data.church_positions}
+                    isMulti
                     onChange={(value) => {
                       setData(
                         'church_positions',
@@ -318,9 +325,10 @@ export default function AddEdit({ auth, request, member, viewOnly = false }: Add
                   />
                 </FormInputGroup>
                 <FormInputGroup label="Church" error={errors?.church}>
-                  <LocalChurchSelect
+                  <ChurchSelect
                     viewMode={viewOnly}
                     selected={data.church}
+                    type={ChurchCategory.Local}
                     onChange={(value) => onSelect('church', value)}
                   />
                 </FormInputGroup>

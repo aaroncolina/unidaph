@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\Feature;
 use App\Enums\RoleType;
 use App\Models\Church;
 use App\Models\Role;
@@ -37,7 +38,7 @@ class UserSeeder extends Seeder
             'first_name' => 'Arthur',
             'last_name' => 'Paredes',
             'email' => 'arthurparedes@gmail.com',
-            'church' => 'Noveleta',
+            'church' => 'Salawag',
             'role' => RoleType::MODERATOR,
         ],
         [
@@ -67,7 +68,7 @@ class UserSeeder extends Seeder
             $church = Church::where('name', $user['church'])->first();
             $role = Role::where('name', $user['role']->value)->first();
 
-            User::factory(1)->create([
+            $user = User::factory(1)->create([
                 'email' => $user['email'],
                 'first_name' => $user['first_name'],
                 'last_name' => $user['last_name'],
@@ -75,11 +76,10 @@ class UserSeeder extends Seeder
                 'church_id' => $church?->id,
                 'role_id' => $role?->id,
             ]);
-        }
 
-        User::factory(15000)->create([
-            'church_id' => 'Noveleta',
-            'role_id' => RoleType::MODERATOR,
-        ]);
+            $user->first()->setFeature(Feature::CHURCH_MANAGED, [
+                $church->uuid,
+            ]);
+        }
     }
 }

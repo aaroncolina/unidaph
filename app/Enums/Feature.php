@@ -31,4 +31,6 @@ enum Feature: string
     case ACCESS_NATIONAL_RECORDS = 'access_national_records';
     case ACCESS_DISTRICT_RECORDS = 'access_district_records';
     case ACCESS_LOCAL_RECORDS = 'access_local_records';
+
+    case CHURCH_MANAGED = 'church_managed';
 }
