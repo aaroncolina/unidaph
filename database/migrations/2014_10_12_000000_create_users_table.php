@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('middle_name')->nullable()->default(null);
             $table->string('last_name')->nullable()->default(null);
             $table->string('suffix')->nullable()->default(null);
-            $table->string('email')->unique()->nullable()->default(null);
+            $table->string('email')->nullable()->default(null);
             $table->timestamp('email_verified_at')->nullable()->default(null);
             $table->string('contact_number')->nullable()->default(null);
             $table->string('username')->unique()->nullable()->default(null);

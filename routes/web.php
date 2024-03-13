@@ -71,7 +71,7 @@ Route::group(
             'import'
         );
 
-        Route::post('upload', [UserController::class, 'upload'])->name(
+        Route::post('import/upload', [UserController::class, 'upload'])->name(
             'import.upload'
         );
     }

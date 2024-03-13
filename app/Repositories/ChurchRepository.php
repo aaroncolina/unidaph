@@ -14,4 +14,9 @@ class ChurchRepository
             ->orderBy('name', 'ASC')
             ->get();
     }
+
+    public function getChurchById(string $id)
+    {
+        return Church::with('parentChurch')->where('id', $id)->first();
+    }
 }

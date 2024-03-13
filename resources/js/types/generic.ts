@@ -63,7 +63,7 @@ export const ImportMemberMappedKeys: Record<ImportMemberKeys, string> = {
   [ImportMemberKeys.Gender]: 'gender',
   [ImportMemberKeys.CivilStatus]: 'civil_status',
   [ImportMemberKeys.DateOfConversion]: 'date_of_conversion',
-  [ImportMemberKeys.DateOfBaptismal]: 'date_of_baptismal',
+  [ImportMemberKeys.DateOfBaptism]: 'date_of_baptism',
   [ImportMemberKeys.ChurchPosition]: 'church_position',
   [ImportMemberKeys.Ministries]: 'ministries'
 };

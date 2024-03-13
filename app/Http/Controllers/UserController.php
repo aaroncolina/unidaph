@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\User\AddUserRequest;
 use App\Http\Requests\User\EditUserRequest;
+use App\Http\Requests\User\ImportUsersRequest;
 use App\Http\Requests\User\UserListRequest;
 use App\Http\Transformer\UserTransformer;
 use App\Models\User;
+use App\Repositories\ChurchRepository;
 use App\Repositories\TagRepository;
 use App\Repositories\UserRepository;
 use App\Services\UserService;
@@ -22,6 +24,7 @@ class UserController extends Controller
         private UserRepository $userRepository,
         private TagRepository $tagRepogsitory,
         private UserService $userService,
+        private ChurchRepository $churchRepositry,
     ) {
     }
 
@@ -126,6 +129,51 @@ class UserController extends Controller
     public function import(): Response
     {
         return Inertia::render('Member/Import');
+    }
+
+    public function upload(ImportUsersRequest $request)
+    {
+        $church = $this->churchRepositry->getChurchById($request->get('church'));
+
+        $data = collect($request->input('data'));
+
+        $church_ministries = $this->tagRepogsitory->getChurchMinistries([
+            'value' => $data->pluck('ministries')->toArray(),
+        ]);
+        $church_positions = $this->tagRepogsitory->getChurchPositions([
+            'value' => $data->pluck('church_position')->toArray(),
+        ]);
+
+        foreach ($data as $value) {
+            $ministry = $church_ministries->filter(function ($item) use ($value) {
+                return $item->value == $value['ministries'];
+            })->first();
+
+            $position = $church_positions->filter(function ($item) use ($value) {
+                return $item->value == $value['church_position'];
+            })->first();
+
+            $existingUser = $this->userRepository->getUserViaName($value);
+
+            $payload = array_merge($value, [
+                'church' => $church->id,
+                'church_ministries' => [$ministry->id],
+                'church_positions' => [$position->id],
+            ]);
+
+            if (! $existingUser) {
+                $this->userService->createUser($payload);
+            } else {
+                $this->userService->updateUser($existingUser, $payload);
+            }
+        }
+
+        $request->session()->flash('toast', [
+            'message' => 'Members imported!',
+            'type' => 'success',
+        ]);
+
+        return Redirect::route('members.index');
     }
 
     protected function loadUserRelations(User $user)

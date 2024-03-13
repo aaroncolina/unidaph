@@ -45,7 +45,7 @@ export enum ImportMemberKeys {
   Gender = 'Gender',
   CivilStatus = 'Civil Status',
   DateOfConversion = 'Date of conversion',
-  DateOfBaptismal = 'Date of baptismal',
+  DateOfBaptism = 'Date of baptism',
   ChurchPosition = 'Church position',
   Ministries = 'Ministries'
 }

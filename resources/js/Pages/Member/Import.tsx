@@ -1,6 +1,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { PageProps, ImportMember } from '@/types';
-import { ImportMemberMappedKeys } from '@/types/generic';
+import { ImportMemberMappedKeys, LabelValue } from '@/types/generic';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import DataTable from '@/Components/DataTable/DataTable';
 import ChurchSelect from '@/Components/Select/ChurchSelect';
@@ -9,6 +9,10 @@ import { FileUpload } from '@/Components/FileUpload/FileUpload';
 import Papa from 'papaparse';
 import { ChurchCategory, ImportMemberKeys } from '@/types/enums';
 import { toast } from 'react-toastify';
+import { router } from '@inertiajs/react';
+import { PostRoutes } from '@/const';
+import { RequestPayload } from '@inertiajs/core';
+import { OnChangeValue } from 'react-select';
 
 export interface ImportProps extends PageProps {}
 
@@ -16,6 +20,7 @@ export default function Import({ auth }: ImportProps) {
   const [parsedData, setParsedData] = useState<ImportMember[]>();
 
   const [columnKeys, setColumnKeys] = useState<string[]>();
+  const [churchId, setChurchId] = useState<number | undefined>();
 
   const [file, setFile] = useState<File>();
 
@@ -54,6 +59,11 @@ export default function Import({ auth }: ImportProps) {
   }, [file]);
 
   const onImportClick = useCallback(() => {
+    if (!churchId) {
+      toast.error('Please select a Church to import.');
+      return;
+    }
+
     const mappedData = parsedData?.map((data) => {
       const structuredObject: Record<string, string> = {};
       Object.keys(data).map((key) => {
@@ -63,8 +73,15 @@ export default function Import({ auth }: ImportProps) {
       return structuredObject;
     });
 
-    console.log(mappedData);
-  }, [parsedData]);
+    router.post(route(PostRoutes.UploadImportMembers), {
+      data: mappedData,
+      church: churchId
+    } as unknown as RequestPayload);
+  }, [parsedData, churchId]);
+
+  const onChurchSelect = (newValue: OnChangeValue<unknown, false>) => {
+    setChurchId((newValue as LabelValue).value as number);
+  };
 
   return (
     <AuthenticatedLayout
@@ -97,7 +114,7 @@ export default function Import({ auth }: ImportProps) {
         <div className="flex flex-row gap-x-3 justify-center items-center">
           <span className="">Church:</span>
 
-          <ChurchSelect selected={auth.user.church?.id} type={ChurchCategory.Local} />
+          <ChurchSelect selected={churchId} onChange={onChurchSelect} type={ChurchCategory.Local} />
         </div>
       }
     >

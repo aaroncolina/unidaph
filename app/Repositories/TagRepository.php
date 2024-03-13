@@ -14,16 +14,32 @@ class TagRepository
         return $tags->get();
     }
 
-    public function getChurchPositions()
+    public function getChurchPositions(array $attributes = [])
     {
         $positions = Tag::where('type', TagType::CHURCH_POSITION)->orderBy('value', 'ASC');
+
+        if ($value = data_get($attributes, 'value')) {
+            if (is_array($value)) {
+                $positions->whereIn('value', $value);
+            } else {
+                $positions->where('value', $value);
+            }
+        }
 
         return $positions->get();
     }
 
-    public function getChurchMinistries()
+    public function getChurchMinistries(array $attributes = [])
     {
         $ministries = Tag::where('type', TagType::CHURCH_MINISTRY)->orderBy('value', 'ASC');
+
+        if ($value = data_get($attributes, 'value')) {
+            if (is_array($value)) {
+                $ministries->whereIn('value', $value);
+            } else {
+                $ministries->where('value', $value);
+            }
+        }
 
         return $ministries->get();
     }
